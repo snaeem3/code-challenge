@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
-from rest_framework.exceptions import ParseError
 
 
 class Home(TemplateView):
@@ -27,10 +26,14 @@ class AddressParse(APIView):
                 'address_type': address_type
             })
         except usaddress.RepeatedLabelError as e:
-            return Response({'error': 'Address could not be parsed', 'details': str(e)}, status=400)
+            return Response(
+                    {'error': 'Address could not be parsed', 'details': str(e)},
+                    status=400
+                )
 
     def parse(self, address):
-        # Returns the parsed components of a given address using usaddress: https://github.com/datamade/usaddress
+        # Returns the parsed components of a given address using usaddress:
+        # https://github.com/datamade/usaddress
         try:
             parsed_address, address_type = usaddress.tag(address)
             address_components = dict(parsed_address)

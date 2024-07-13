@@ -2,6 +2,13 @@ module.exports = {
   globals: {
     __PATH_PREFIX__: true,
   },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  env: {
+    es6: true
+  },
   rules: {
     "indent": ["error", 2],
     "no-console": "off",

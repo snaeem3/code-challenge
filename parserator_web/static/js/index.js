@@ -1,12 +1,12 @@
-/* TODO: Flesh this out to connect the form to the API and render results
-   in the #address-results div. */
 document.addEventListener('DOMContentLoaded', function () {
+  // Add an event listener to the form to handle form submission
   document.getElementById('address-form').addEventListener('submit', function (event) {
-    event.preventDefault()
+    event.preventDefault() // Prevent page refresh
 
     const addressInput = document.getElementById('address').value
     const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value
 
+    // Make a GET request to the API endpoint with the address as a query parameter
     fetch(`/api/parse/?address=${encodeURIComponent(addressInput)}`, {
       method: 'GET',
       headers: {
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (data.error) {
           alert(data.error)
         } else {
+          // If the response is successful, update the DOM with the parsed address components
           document.getElementById('parse-type').innerText = data.address_type
           const resultsTableBody = document.getElementById('results-table-body')
           resultsTableBody.innerHTML = ''
